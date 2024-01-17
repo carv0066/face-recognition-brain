@@ -67,7 +67,9 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
-      route: 'signin' // Chooses which pages will be shown and keeps track of where we are on the page
+      route: 'signin', // Chooses which pages will be shown and keeps track of where we are on the page
+      isSignedIn: false
+
     }
   }
 
@@ -118,6 +120,11 @@ class App extends Component {
 
   //Event handler for route changes
   onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState({isSignedIn: false})
+    }else if(route === 'home') {
+      this.setState({isSignedIn:true})
+    }
     this.setState({route: route});
   }
 
