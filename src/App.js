@@ -95,7 +95,6 @@ class App extends Component {
   displayFaceBox = (box) => {
     // Setting the box state to update the face box location
     this.setState({box:box});
-    console.log(box)
   }
   
   // Event handler for input changes
@@ -130,6 +129,7 @@ class App extends Component {
 
   // Render method to define the structure of the App component
   render() {
+    const { isSignedIn, imageUrl, route, box } = this.state;
     return (
       // Main container for the App component
       <div className="App">
@@ -142,10 +142,10 @@ class App extends Component {
         </>
 
         {/* Navigation component for the application */}
-        <Navigation onRouteChange={this.onRouteChange} />
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
 
         {/* Conditional rendering based on the value of this.state.route */}
-        { this.state.route === 'home' 
+        { route === 'home' 
         //
           ? <div>
           <Logo />
@@ -154,11 +154,11 @@ class App extends Component {
             onInputChange={this.onInputChange}
             onButtonSubmit={this.onButtonSubmit}
           />
-          <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
+          <FaceRecognition box={box} imageUrl={imageUrl} />
         </div>
         // 
           : (
-            this.state.route === 'signin'
+            route === 'signin'
             //
             ? <Signin onRouteChange={this.onRouteChange} />
             : <Register onRouteChange={this.onRouteChange} />
