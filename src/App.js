@@ -73,13 +73,6 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    //the function comes already incorporated in react
-    //Fetching information and connecting my the server I created with node.js
-    fetch('http://localhost:3000/')
-    .then(response => response.json())
-    .then(console.log)//Instead of .then(data => console.log(data)) 
-  }
 
   // Event handler for finding the location of faces
   calculateFaceLocation = (data) => {
