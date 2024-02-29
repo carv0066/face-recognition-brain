@@ -121,14 +121,30 @@ class App extends Component {
   }
 
   //Event handler for detect button clicks
-  onPictureSubmit = () => {
+  onButtonSubmit = () => {
     // Setting the imageUrl state to the current input value
     this.setState({imageUrl: this.state.input});
   
      // Making a fetch request to the Clarifai API
     fetch("https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.input))
     .then(response => response.json())
-    .then(result => this.displayFaceBox(this.calculateFaceLocation(result)))
+    .then(result => {
+
+      if(result) {//if response is equal to true then
+        fetch("http://localhost:3000/image", {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              id: this.state.user.id
+          })
+      })
+      .then(response => response.json())
+      .then(count => {
+        this.setState(Object.assign(this.state.user, {entries: count}))
+      })
+      }
+      this.displayFaceBox(this.calculateFaceLocation(result))
+    })
     .catch(error => console.log('error', error));
   }
 

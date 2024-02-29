@@ -13,7 +13,7 @@ const Rank = ({ name, entries }) => {
 
             {/* Displaying the user's rank number with a white text color and f1 font size */}
             <div className="white f1">
-                {`${entries}`}
+                {entries}
             </div>
         </div>
     );
