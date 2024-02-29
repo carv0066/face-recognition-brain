@@ -35,9 +35,10 @@ class Signin extends React.Component {
         })
             // Parsing the response as JSON
             .then(response => response.json())
-            .then(data => {
+            .then(user => {
                 // If the response indicates success, change route to 'home'
-                if (data === 'success') {
+                if (user) {// does the user exist? Did we receive a user with a property of id?
+                    this.props.loadUser(user);
                     this.props.onRouteChange('home');
                 }
             })

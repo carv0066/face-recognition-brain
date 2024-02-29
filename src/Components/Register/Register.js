@@ -5,7 +5,6 @@ import React from "react";
 class Register extends React.Component {
     constructor (props) {
         super(props);
-        // Initializing state with signInEmail and signInPassword
         this.state = {
             email: '',
             password: '',
@@ -31,7 +30,7 @@ class Register extends React.Component {
 
     onSubmitSignIn = () => {
         // Sending a fetch request to the server with email and password
-        fetch('http://localhost:3000/signin', {
+        fetch('http://localhost:3000/register', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -42,9 +41,10 @@ class Register extends React.Component {
         })
             // Parsing the response as JSON
             .then(response => response.json())
-            .then(data => {
+            .then(user => {
                 // If the response indicates success, change route to 'home'
-                if (data === 'success') {
+                if (user) {
+                    this.props.loadUser(user)
                     this.props.onRouteChange('home');
                 }
             })
