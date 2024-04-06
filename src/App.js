@@ -10,47 +10,6 @@ import ImageLinkForm from "./Components/ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./Components/FaceRecognition/FaceRecognition";
 import Rank from "./Components/Rank/Rank";
 
-const returnClarifaiRequestOptions = (imageUrl) => {
-  // Your PAT (Personal Access Token) can be found in the portal under Authentification
-  const PAT = "fe496818dcae4370b151fc4bbb9bb7d1";
-  // Specify the correct user_id/app_id pairings
-  // Since you're making inferences outside your app's scope
-  const USER_ID = "cjeternal21";
-  const APP_ID = "face-recognition-brain";
-  // Change these to whatever model and image URL you want to use
-  const MODEL_ID = "face-detection";
-  //I use the imageUrl parameter so that the image becomes dynamic
-  const IMAGE_URL = imageUrl;
-
-  //Setting up the JSON that will be sent to clarifai
-  const raw = JSON.stringify({
-    user_app_id: {
-      user_id: USER_ID,
-      app_id: APP_ID,
-    },
-    inputs: [
-      {
-        data: {
-          image: {
-            url: IMAGE_URL,
-          },
-        },
-      },
-    ],
-  });
-
-  // Creating requestOptions object for the fetch request
-  const requestOptions = {
-    method: "POST", // Using the HTTP POST method for the request
-    headers: {
-      Accept: "application/json", // Specifying that the response should be in JSON format
-      Authorization: "Key " + PAT, // Including the Clarifai API key in the request headers
-    },
-    body: raw, // Including the JSON data in the request body
-  };
-
-  return requestOptions;
-};
 
 const initialState = {
     input: "",
@@ -93,6 +52,7 @@ class App extends Component {
   // Event handler for finding the location of faces
   calculateFaceLocation = (data) => {
     //Selecting the bounding box data to use
+    console.log(data);
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
     //adds an ID to the image
@@ -124,12 +84,13 @@ class App extends Component {
   onButtonSubmit = () => {
     // Setting the imageUrl state to the current input value
     this.setState({ imageUrl: this.state.input });
-
-    // Making a fetch request to the Clarifai API
-    fetch(
-      "https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs",
-      returnClarifaiRequestOptions(this.state.input)
-    )
+    fetch("http://localhost:3000/imageurl", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
       .then((response) => response.json())
       .then((result) => {
         if (result) {

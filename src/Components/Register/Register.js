@@ -12,7 +12,7 @@ class Register extends React.Component {
         }
     }
 
-    // Method to update signInEmail state when input changes
+    // Method to update signName state when input changes
     onNameChange = (event) => {
         this.setState({name: event.target.value})
     }
@@ -43,7 +43,7 @@ class Register extends React.Component {
             .then(response => response.json())
             .then(user => {
                 // If the response indicates success, change route to 'home'
-                if (user) {
+                if (user.id) {
                     this.props.loadUser(user)
                     this.props.onRouteChange('home');
                 }
