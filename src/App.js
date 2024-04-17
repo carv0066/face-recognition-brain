@@ -84,7 +84,7 @@ class App extends Component {
   onButtonSubmit = () => {
     // Setting the imageUrl state to the current input value
     this.setState({ imageUrl: this.state.input });
-    fetch("http://localhost:3000/imageurl", {
+    fetch("https://smart-brain-api-backend-o27j.onrender.com", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -95,7 +95,7 @@ class App extends Component {
       .then((result) => {
         if (result) {
           //if response is equal to true then
-          fetch("http://localhost:3000/image", {
+          fetch("https://smart-brain-api-backend-o27j.onrender.com", {
             method: "put",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
