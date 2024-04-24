@@ -25,7 +25,7 @@ class Signin extends React.Component {
     // Method to handle form submission
     onSubmitSignIn = () => {
         // Sending a fetch request to the server with email and password
-        fetch('http://localhost:3000/signin', {
+        fetch("https://smart-brain-api-backend-o27j.onrender.com", {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
