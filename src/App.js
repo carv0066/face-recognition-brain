@@ -94,7 +94,7 @@ class App extends Component {
       .then((response) => response.json())
       .then((result) => {
         if (result) {
-          //if response is equal to true then
+          //if response is equal to true then fetch
           fetch('https://smart-brain-backend-am83.onrender.com/image', {
             method: "put",
             headers: { "Content-Type": "application/json" },
